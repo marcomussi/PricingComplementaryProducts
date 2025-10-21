@@ -15,4 +15,3 @@ def kernel_rbf(a, b, L):
             output[i, j] = np.power(np.linalg.norm(a[i, :] - b[j, :], 2), 2)
     
     return np.exp(- L * output)
-s
