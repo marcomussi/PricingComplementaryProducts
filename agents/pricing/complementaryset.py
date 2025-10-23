@@ -19,14 +19,14 @@ class OptComplementarySetPricingAgent:
         self.horizon = horizon
         self.alpha = alpha # 1 revenue, 0 profit
         self.iterative = iterative
-        self.leader_bandit_agent = IGPUCB(self.margins_leader, kernel_L, 0.25, 1, 1/horizon, het=True)
+        self.leader_bandit_agent = IGPUCB(self.n_actions, 1, self.margins_leader, kernel_L, 0.25, 1, 1/horizon, het=True)
         self.LEAD = "lead"
         self.NOLEAD = "no_lead"
         self.followers_bandit_agent = []
         for i in range(n_followers):
             self.followers_bandit_agent.append({
-                self.LEAD : IGPUCB(self.margins_followers, kernel_L, 0.25, 1, 1/horizon, het=True), 
-                self.NOLEAD : IGPUCB(self.margins_followers, kernel_L, 0.25, 1, 1/horizon, het=True)
+                self.LEAD : IGPUCB(self.n_actions, 1, self.margins_followers, kernel_L, 0.25, 1, 1/horizon, het=True), 
+                self.NOLEAD : IGPUCB(self.n_actions, 1, self.margins_followers, kernel_L, 0.25, 1, 1/horizon, het=True)
             })
         self.last_action = None
         self.prob_concurrency_followers = np.zeros((self.n_followers))

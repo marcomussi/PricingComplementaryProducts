@@ -14,15 +14,14 @@ class OptIndepPricingAgent:
         assert alpha >= 0 and alpha <= 1, "alpha must be in [0, 1]"
         self.alpha = alpha # 1 revenue, 0 profit
         self.iterative = iterative
-        self.bandit_agent = IGPUCB(actions, kernel_L, 0.25, 1, 1/horizon, het=True)
+        self.bandit_agent = IGPUCB(self.n_actions, 1, actions, kernel_L, 0.25, 1, 1/horizon, het=True)
         self.last_action = None
 
 
     def pull(self):
         demand_ucbs = self.bandit_agent.get_optimistic_estimates()
         obj_ucbs = (self.alpha + self.actions.ravel()) * demand_ucbs
-        argmax_vals = np.argmax(obj_ucbs)
-        choice = argmax_vals[0] if isinstance(argmax_vals, np.ndarray) else argmax_vals
+        choice = np.argmax(obj_ucbs)
         self.last_action = self.actions[choice, :]
         return float(self.last_action)
 
