@@ -182,7 +182,7 @@ class IGPUCB:
             raise NotImplementedError("Batch/weighted updates are not implemented "
                                       "for the standard (non-heteroscedastic) GP.")
 
-        self.regressor.add_sample(action.reshape(1, self.action_dim), 
+        self.regressor.add_sample(np.array(action).reshape(1, self.action_dim), 
                                   np.array(reward).reshape(1, 1), 
                                   sample_weight=sample_weight)
         
